@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import Item from "./components/Item";
 import Search from "./components/Search";
 import NotFound from "./components/NotFound";
+import { BrowserRouter } from "react-router-dom/cjs/react-router-dom.min";
 
 class App extends Component {
   // Prevent page reload, clear input, set URL and push history on submit
@@ -18,10 +19,10 @@ class App extends Component {
   render() {
     return (
       <PhotoContextProvider>
-        <HashRouter basename="/SnapScout">
+        <BrowserRouter>
           <div className="container">
             <Route
-              render={props => (
+              render={(props) => (
                 <Header
                   handleSubmit={this.handleSubmit}
                   history={props.history}
@@ -44,14 +45,14 @@ class App extends Component {
               <Route path="/food" render={() => <Item searchTerm="food" />} />
               <Route
                 path="/search/:searchInput"
-                render={props => (
+                render={(props) => (
                   <Search searchTerm={props.match.params.searchInput} />
                 )}
               />
               <Route component={NotFound} />
             </Switch>
           </div>
-        </HashRouter>
+        </BrowserRouter>
       </PhotoContextProvider>
     );
   }
