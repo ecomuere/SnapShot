@@ -1,7 +1,10 @@
 import React from "react";
 import Container from "./Container";
+import { useParams } from "react-router-dom";
 
-const Item = ({ searchTerm }) => {
+const Item = () => {
+  const { searchTerm } = useParams();
+
   return (
     <div>
       <h2>{searchTerm} Pictures</h2>

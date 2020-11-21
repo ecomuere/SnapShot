@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
-const Form = ({ handleSubmit, history }) => {
+const Form = () => {
   const [searchEntry, setSearchEntry] = useState("");
+  const history = useHistory();
+  const location = useLocation();
+
   // update search text state
-  const updateSearchInput = e => {
+  const updateSearchInput = (e) => {
     setSearchEntry(e.target.value);
   };
+
+  const handleSubmit = (e, history, searchInput) => {
+    e.preventDefault();
+    e.currentTarget.reset();
+    let url = `/search/${searchInput}`;
+    history.push(url);
+  };
+
+  useEffect(() => setSearchEntry(""), [location.pathname]);
+
   return (
     <form
       className="search-form"
-      onSubmit={e => handleSubmit(e, history, searchEntry)}
+      onSubmit={(e) => handleSubmit(e, history, searchEntry)}
     >
       <input
         type="text"
@@ -20,7 +34,7 @@ const Form = ({ handleSubmit, history }) => {
       />
       <button
         type="submit"
-        className={`search-button ${searchEntry.trim() ? "active" : null}`}
+        className={`search-button active`}
         disabled={!searchEntry.trim()}
       >
         <svg height="32" width="32">
