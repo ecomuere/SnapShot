@@ -1,18 +1,20 @@
-import React, { useContext, useEffect } from "react";
-import { PhotoContext } from "../context/PhotoContext";
+import React from "react";
+import { useSearch } from "../hooks/useSearch";
 import Gallery from "./Gallery";
 import Loader from "./Loader";
 
 const Container = ({ searchTerm }) => {
-  const { images, loading, runSearch } = useContext(PhotoContext);
-  useEffect(() => {
-    runSearch(searchTerm);
-    // eslint-disable-next-line
-  }, [searchTerm]);
+  const { isLoading, isError, data } = useSearch(searchTerm);
 
   return (
     <div className="photo-container">
-      {loading ? <Loader /> : <Gallery data={images} />}
+      {isError ? (
+        <div>Error</div>
+      ) : isLoading ? (
+        <Loader />
+      ) : (
+        <Gallery data={data.photos.photo} />
+      )}
     </div>
   );
 };
